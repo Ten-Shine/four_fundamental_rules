@@ -103,6 +103,7 @@ dmypy.json
 Exercises.txt
 Answers.txt
 Grade.txt
+*.txt
 Myapp.exe
 *.exe
 
