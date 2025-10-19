@@ -279,13 +279,13 @@ class Deduplicator:
         self.seen_canonical_forms.add(canonical)
         return False
     
-    def is_duplicate(self, expression: str, strategy: str = "expression") -> bool:
+    def is_duplicate(self, expression: str, strategy: str = "canonicalize") -> bool:
         """
         检查表达式是否重复
         
         Args:
             expression (str): 表达式字符串
-            strategy (str): 去重策略 ("expression", "result", "hash")
+            strategy (str): 去重策略 ("expression", "result", "hash", "canonicalize")
             
         Returns:
             bool: 是否重复
@@ -302,7 +302,7 @@ class Deduplicator:
             raise ValueError(f"未知的去重策略: {strategy}")
     
     def deduplicate_problems(self, problems: List[Tuple[str, str]], 
-                           strategy: str = "expression") -> List[Tuple[str, str]]:
+                           strategy: str = "canonicalize") -> List[Tuple[str, str]]:
         """
         对题目列表进行去重
         
@@ -469,7 +469,7 @@ class DeduplicationStats:
 
 # 便捷函数
 def deduplicate_problems(problems: List[Tuple[str, str]], 
-                        strategy: str = "expression") -> List[Tuple[str, str]]:
+                        strategy: str = "canonicalize") -> List[Tuple[str, str]]:
     """
     去重题目的便捷函数
     

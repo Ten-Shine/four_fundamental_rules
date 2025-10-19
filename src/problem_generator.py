@@ -10,6 +10,7 @@ import os
 from typing import List, Tuple, Set
 from rational import Rational
 from expression_parser import ExpressionParser
+from deduplicator import Deduplicator
 
 # 添加当前目录到路径
 sys.path.insert(0, os.path.dirname(__file__))
@@ -29,6 +30,7 @@ class ProblemGenerator:
         self.min_value = min_value
         self.max_value = max_value
         self.parser = ExpressionParser()
+        self.deduplicator = Deduplicator()
         
         # 运算符列表
         self.operators = ['+', '-', '*', '/']
@@ -193,6 +195,7 @@ class ProblemGenerator:
         """
         problems = []
         self.generated_problems.clear()
+        self.deduplicator.reset()  # 重置去重器
         
         for i in range(count):
             # 生成唯一且有效的表达式
@@ -223,8 +226,8 @@ class ProblemGenerator:
         for _ in range(max_attempts):
             expression = self.generate_valid_expression()
             
-            # 检查是否已存在
-            if expression not in self.generated_problems:
+            # 使用规范化去重检查（支持交换律）
+            if not self.deduplicator.is_duplicate(expression):
                 self.generated_problems.add(expression)
                 return expression
         
